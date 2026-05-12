@@ -35,7 +35,7 @@ After automatic detection, the script opens the Praat editor so the user can man
 - Results are appended to a cumulative CSV in the same folder as the audio,   so all recordings in a folder accumulate in a single output file.
 - Compatible with Linux, Mac, and Windows.
 
-### Sources
+### Adapted from
 
 - De Jong, N. & Wempe, T. (2009). Praat script to detect syllable nuclei and measure speech rate automatically. *Behavior Research Methods*, 41(2), 385–390. <https://doi.org/10.3758/BRM.41.2.385>
 - Quené, H., Persoon, I. & De Jong, N. (2010). Modified version of the original script [version 2010.09.17]. <https://github.com/FieldDB/Praat-Scripts/blob/main/praat-script-syllable-nuclei-v2dir.praat>
@@ -61,9 +61,9 @@ Extracts $f_0$ (mean and SD) and formant frequencies (F1–F4) summary statistic
 - Undefined values (unvoiced or silent segments) are replaced with `0`.
 - Formant analysis uses the Burg method (5 formants, 25 ms window, pre-emphasis from 50 Hz), matching the settings of Hilton et al. (2022).
 
-### Sources
+### Adapted from
 
-- Adapted from `analysis/acoustics_processing/3_masterscript.praat` in  Hilton, C. B., Moser, C. J., et al. (2022). Acoustic regularities in   infant-directed speech and song across cultures. *Science*, 378(6617).   <https://doi.org/10.1126/science.abm1720>
+- Adapted from [`analysis/acoustics_processing/3_masterscript.praat`](https://github.com/themusiclab/infant-speech-song/blob/main/analysis/acoustics_processing/3_masterscript.praat) in  Hilton, C. B., Moser, C. J., et al. (2022). Acoustic regularities in   infant-directed speech and song across cultures. *Science*, 378(6617).   <https://doi.org/10.1126/science.abm1720>
 - Original script repository: <https://github.com/themusiclab/infant-speech-song>
 
 ---
