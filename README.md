@@ -13,6 +13,7 @@ Juan David Leongómez [![ORCID](https://img.shields.io/badge/ORCID-0000--0002--0
 | Script | Description |
 | --- | --- |
 | [`syllable-nuclei-with-review.praat`](#syllable-nuclei-with-reviewpraat) | Detect syllable nuclei; compute speech and articulation rates with a manual review step |
+| [`extract_f0_formants.praat`](#extract_f0_formantspraat) | General-purpose batch extraction of duration, $f_0$, formants, and formant dispersion from a folder of `.wav` files |
 | [`extract_formants_IDS.praat`](#extract_formants_idspraat) | Extract $f_0$ and formant summary statistics from a folder of IDS `.wav` files |
 | [`IDS_manipulation.praat`](#ids_manipulationpraat) | Generate 8 factorial acoustic manipulations ($f_0$ mean × $f_0$ SD × formants) from a single recording |
 
@@ -39,6 +40,41 @@ After automatic detection, the script opens the Praat editor so the user can man
 
 - De Jong, N. & Wempe, T. (2009). Praat script to detect syllable nuclei and measure speech rate automatically. *Behavior Research Methods*, 41(2), 385–390. <https://doi.org/10.3758/BRM.41.2.385>
 - Quené, H., Persoon, I. & De Jong, N. (2010). Modified version of the original script [version 2010.09.17]. <https://github.com/FieldDB/Praat-Scripts/blob/main/praat-script-syllable-nuclei-v2dir.praat>
+
+---
+
+## `extract_f0_formants.praat`
+
+General-purpose version of the batch extraction, not tied to any particular corpus. For every `.wav` file in a folder, it writes one row to a CSV with the following columns:
+
+| Column | Description |
+| --- | --- |
+| `filename` | File name without the `.wav` extension |
+| `duration_s` | Total duration (s) |
+| `f0_mean_hz` / `f0_sd_hz` | $f_0$ mean and SD (Hz) |
+| `f1_mean_hz` – `f4_mean_hz` | Mean frequency of F1–F4 (Hz) |
+| `formant_mean_hz` | Arithmetic mean of F1–F4 (Hz) |
+| `df_hz` | Formant dispersion, $D_f = (F_4 - F_1) / 3$ (Fitch, 1997) (Hz) |
+
+### Parameters
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `directory` | Folder containing the `.wav` files (trailing `/` optional) | — |
+| `output_file` | Full path of the output CSV | — |
+| `pitch_floor` / `pitch_ceiling` | $f_0$ analysis range | 75 / 500 Hz |
+| `maximum_formant` | Formant analysis ceiling | 5500 Hz |
+
+### Notes
+
+- Recommended ranges: $f_0$ 75–300 Hz and `maximum_formant = 5000` for male speakers; $f_0$ 100–600 Hz and `maximum_formant = 5500` for female speakers and children.
+- Undefined values (e.g., unvoiced or silent files) are written as `NA`, so the CSV can be read directly into R. `formant_mean_hz` is `NA` unless all four formants are defined, and `df_hz` is `NA` unless F1 and F4 are defined.
+- Formant analysis uses the Burg method (5 formants, 25 ms window, pre-emphasis from 50 Hz), matching the settings of Hilton et al. (2022).
+
+### Sources
+
+- Formant analysis settings: Hilton, C. B., Moser, C. J., et al. (2022). Acoustic regularities in infant-directed speech and song across cultures. *Science*, 378(6617). <https://doi.org/10.1126/science.abm1720>
+- Formant dispersion: Fitch, W. T. (1997). Vocal tract length and formant frequency dispersion correlate with body size in rhesus macaques. *The Journal of the Acoustical Society of America*, 102(2), 1213–1222. <https://doi.org/10.1121/1.421048>
 
 ---
 
@@ -123,7 +159,8 @@ Each script carries its own license header because they derive from different up
 | Script | License | Upstream |
 | --- | --- | --- |
 | `syllable-nuclei-with-review.praat` | [GPL-3.0-or-later](https://www.gnu.org/licenses/gpl-3.0.html) | de Jong & Wempe (2008); Quené et al. (2010) via [FieldDB/Praat-Scripts](https://github.com/FieldDB/Praat-Scripts) |
+| `extract_f0_formants.praat` | [GPL-3.0-or-later](https://www.gnu.org/licenses/gpl-3.0.html) | Original code; analysis settings follow Hilton, Moser et al. (2022) |
 | `extract_formants_IDS.praat` | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) | Hilton, Moser et al. (2022) via [themusiclab/infant-speech-song](https://github.com/themusiclab/infant-speech-song) |
 | `IDS_manipulation.praat` | [GPL-2.0-or-later](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) | Original code; formant shift procedure adapted from [Praat Vocal Toolkit](http://www.praatvocaltoolkit.com/) `changeformants.praat` (verify license) |
 
-> **Note:** `extract_formants_IDS.praat` is released under CC BY-NC-SA 4.0, which restricts **commercial use**. The other two scripts are GPL and permit commercial use. These licenses are not mutually compatible, so a single repo-wide license is not applied.
+> **Note:** `extract_formants_IDS.praat` is released under CC BY-NC-SA 4.0, which restricts **commercial use**. The other scripts are GPL and permit commercial use. These licenses are not mutually compatible, so a single repo-wide license is not applied.
