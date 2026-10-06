@@ -2,12 +2,12 @@
 #                                                                         #
 #  Praat Script Syllable Nuclei -- modified for manual review             #
 #                                                                         #
-#  Original:  Copyright (C) 2008  Nivja de Jong & Ton Wempe               #
+#  Original:  Copyright (C) 2008  Nivja de Jong & Ton Wempe              #
 #  Modified:  2010.09.17  Hugo Quené, Ingrid Persoon, & Nivja de Jong     #
-#  Modified:  2026        Juan David Leongómez                            #
-#             - interactive file chooser; CSV output (appended per run)   #
-#             - manual review step: editor opens before calculating rates #
-#             - sonority envelope: intensity on bandpass-filtered audio   #
+#  Modified:  2025        Juan David Leongómez                            #
+#             - added manual review step (editor pause)                   #
+#             - added CSV output                                           #
+#             - sonority envelope via bandpass-filtered intensity          #
 #             - pitch-based utterance validation (VAD)                    #
 #                                                                         #
 #  NB: speech rate       = syllables / total duration                     #
@@ -21,39 +21,34 @@
 #  <https://www.gnu.org/licenses/gpl-3.0.html>
 #
 # WORKFLOW:
-#   1. Fill in the parameters and select a WAV file.
-#   2. The script detects syllable nuclei and utterance boundaries,
-#      then opens the Sound + TextGrid in the editor for manual review.
-#   3. Correct the "syllables" tier (tier 1) as needed; edit the
-#      utterance/silent tier (tier 2) if any pauses were missed or
-#      incorrectly detected.
-#   4. Click Continue -- the script re-counts from the corrected tiers
-#      and appends one row of results to the CSV.
+#   1. Script detects syllable nuclei and builds a TextGrid.
+#   2. The Sound + TextGrid open in the editor so you can manually
+#      add or remove points in the "syllables" tier.
+#   3. After you click Continue, the script re-counts the points
+#      from the (possibly corrected) tier and writes results to CSV.
 #
-# IMPROVEMENTS OVER PREVIOUS VERSIONS:
-#   Syllables: intensity is computed on a bandpass-filtered copy of the
-#     audio (default 100-6000 Hz, adjustable in the form). This suppresses
-#     low-frequency room noise and microphone rumble without cutting into
-#     vowel formant energy, producing a cleaner sonority envelope for
-#     nucleus detection. Raising the low cutoff reduces over-detection;
-#     lowering it reduces under-detection.
+# IMPROVEMENTS OVER ORIGINAL:
+#   Syllables: intensity is computed on a 300-3500 Hz bandpass-filtered
+#     copy of the audio (sonority envelope). This band covers the vowel
+#     formant region, suppressing low-frequency room noise and high-
+#     frequency fricative energy, which are not syllable nuclei.
 #
-#   Silences: after intensity-based segmentation, each "utterance" interval
-#     is validated against the Pitch object. Intervals where fewer than
-#     min_voiced_fraction of sampled time points have a defined f0 are
-#     reclassified as "silent", removing noise bursts or breaths that pass
-#     the intensity threshold but contain no vocal-fold vibration.
+#   Silences: after the standard intensity-based segmentation, each
+#     "utterance" interval is validated against the Pitch object.
+#     Intervals where fewer than min_voiced_fraction of sampled points
+#     have a defined f0 are reclassified as "silent". This removes
+#     noise bursts or breath sounds that pass the intensity threshold
+#     but contain no true vocal-fold vibration.
 #
 # USAGE NOTES:
-#   - Tier 1 = "syllables" (points). Add or remove points here.
-#   - Tier 2 = utterance/silent intervals. Edit if the automatic
-#     segmentation missed or incorrectly detected pauses. To add a
-#     silent interval: place boundaries at each edge of the silence
-#     (Boundary > Add on selected tier), then label the new interval
-#     "silent" (exactly; not "silence" or "pause"). Flanking speech
-#     intervals must be labelled "utterance".
-#   - Results are APPENDED to the CSV on each run, so all recordings
-#     in a folder accumulate in a single output file.
+#   - Tier 1 in the editor = "syllables" (points). Edit this tier.
+#   - Tier 2 in the editor = utterance/silence intervals.
+#     Edit this tier only if the automatic segmentation missed a pause.
+#   - To add a silence in tier 2: place boundaries at each edge of the
+#     silent stretch (Tier > Add interval boundary), then label the new
+#     interval "silent" (not "silence", not "pause").
+#   - The CSV is APPENDED to on each run, so process all files in a
+#     folder one by one and accumulate results in a single table.
 ###########################################################################
 
 
@@ -87,6 +82,10 @@ filePath$ = chooseReadFile$("Select a WAV file")
 if filePath$ = ""
     exit No file selected. Script cancelled.
 endif
+
+# Normalise path separator: replace backslashes (Windows) with forward slashes.
+# This makes the path-splitting code below work identically on all platforms.
+filePath$ = replace$(filePath$, "\", "/", 0)
 
 directory$ = left$(filePath$, rindex(filePath$, "/"))
 directory$ = left$(directory$, length(directory$) - 1)
@@ -313,6 +312,7 @@ for i from 1 to voicedcount
     Insert point... 1 position ""
 endfor
 
+
 # -----------------------------------------------------------------------
 # 10. CLEAN UP INTERMEDIATE OBJECTS (before opening editor)
 # -----------------------------------------------------------------------
@@ -406,10 +406,10 @@ asd              = speakingtot / voicedcount
 outputCSVexists = fileReadable(outputCSV$)
 
 if outputCSVexists = 0
-    fileappend 'outputCSV$' fileName,syllableCount,pauseCount,totalDuration_s,phonationTime_s,speechRate_syll_s,articulationRate_syll_s,avgSyllDuration_s'newline$'
+    fileappend "'outputCSV$'" fileName,syllableCount,pauseCount,totalDuration_s,phonationTime_s,speechRate_syll_s,articulationRate_syll_s,avgSyllDuration_s'newline$'
 endif
 
-fileappend 'outputCSV$' 'soundname$','voicedcount','npause','originaldur:3','speakingtot:3','speakingrate:3','articulationrate:3','asd:4''newline$'
+fileappend "'outputCSV$'" 'soundname$','voicedcount','npause','originaldur:3','speakingtot:3','speakingrate:3','articulationrate:3','asd:4''newline$'
 
 
 # -----------------------------------------------------------------------
