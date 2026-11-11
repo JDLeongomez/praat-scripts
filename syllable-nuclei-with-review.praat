@@ -4,7 +4,7 @@
 #                                                                         #
 #  Original:  Copyright (C) 2008  Nivja de Jong & Ton Wempe              #
 #  Modified:  2010.09.17  Hugo Quené, Ingrid Persoon, & Nivja de Jong     #
-#  Modified:  2025        Juan David Leongómez                            #
+#  Modified:  2026        Juan David Leongómez                            #
 #             - added manual review step (editor pause)                   #
 #             - added CSV output                                           #
 #             - sonority envelope via bandpass-filtered intensity          #
@@ -28,7 +28,7 @@
 #      from the (possibly corrected) tier and writes results to CSV.
 #
 # IMPROVEMENTS OVER ORIGINAL:
-#   Syllables: intensity is computed on a 300-3500 Hz bandpass-filtered
+#   Syllables: intensity is computed on a bandpass-filtered (default 100-6000 Hz)
 #     copy of the audio (sonority envelope). This band covers the vowel
 #     formant region, suppressing low-frequency room noise and high-
 #     frequency fricative energy, which are not syllable nuclei.

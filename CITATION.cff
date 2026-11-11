@@ -1,0 +1,87 @@
+cff-version: 1.2.0
+message: >-
+  If you use these scripts, please cite this repository as below. Most
+  scripts build on earlier work; please also cite the sources listed under
+  "references" that apply to the script you used (see "How to cite" in
+  README.md).
+type: software
+title: "praat-scripts: Praat scripts for acoustic analysis and speech manipulation"
+authors:
+  - family-names: Leongómez
+    given-names: Juan David
+    orcid: "https://orcid.org/0000-0002-0092-6298"
+repository-code: "https://github.com/JDLeongomez/praat-scripts"
+url: "https://github.com/JDLeongomez/praat-scripts"
+keywords:
+  - Praat
+  - phonetics
+  - acoustic analysis
+  - speech rate
+  - syllable nuclei
+  - fundamental frequency
+  - formants
+  - infant-directed speech
+# Scripts carry different licenses (GPL-3.0-or-later, GPL-2.0-or-later,
+# CC-BY-NC-SA-4.0); see the "Licenses" section of README.md.
+# After the first release, add:
+# version: "1.0.0"
+# date-released: "2026-MM-DD"
+# doi: "10.5281/zenodo.XXXXXXX"
+references:
+  - type: article
+    authors:
+      - family-names: De Jong
+        given-names: Nivja H.
+      - family-names: Wempe
+        given-names: Ton
+    title: "Praat script to detect syllable nuclei and measure speech rate automatically"
+    journal: "Behavior Research Methods"
+    year: 2009
+    volume: 41
+    issue: 2
+    start: 385
+    end: 390
+    doi: "10.3758/BRM.41.2.385"
+  - type: software
+    authors:
+      - family-names: Quené
+        given-names: Hugo
+      - family-names: Persoon
+        given-names: Ingrid
+      - family-names: De Jong
+        given-names: Nivja H.
+    title: "Praat script syllable nuclei (modified version 2010.09.17)"
+    year: 2010
+    url: "https://github.com/FieldDB/Praat-Scripts/blob/main/praat-script-syllable-nuclei-v2dir.praat"
+  - type: article
+    authors:
+      - family-names: Hilton
+        given-names: Courtney B.
+      - family-names: Moser
+        given-names: Cody J.
+      - name: "et al."
+    title: "Acoustic regularities in infant-directed speech and song across cultures"
+    journal: "Nature Human Behaviour"
+    year: 2022
+    volume: 6
+    start: 1545
+    end: 1556
+    doi: "10.1038/s41562-022-01410-x"
+  - type: article
+    authors:
+      - family-names: Fitch
+        given-names: W. Tecumseh
+    title: "Vocal tract length and formant frequency dispersion correlate with body size in rhesus macaques"
+    journal: "The Journal of the Acoustical Society of America"
+    year: 1997
+    volume: 102
+    issue: 2
+    start: 1213
+    end: 1222
+    doi: "10.1121/1.421048"
+  - type: software
+    authors:
+      - family-names: Corretge
+        given-names: Ramon
+    title: "Praat Vocal Toolkit"
+    url: "http://www.praatvocaltoolkit.com/"

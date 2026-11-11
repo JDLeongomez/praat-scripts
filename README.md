@@ -17,6 +17,8 @@ Juan David Leongómez [![ORCID](https://img.shields.io/badge/ORCID-0000--0002--0
 | [`extract_formants_IDS.praat`](#extract_formants_idspraat) | Extract $f_0$ and formant summary statistics from a folder of IDS `.wav` files |
 | [`IDS_manipulation.praat`](#ids_manipulationpraat) | Generate 8 factorial acoustic manipulations ($f_0$ mean × $f_0$ SD × formants) from a single recording |
 
+See [How to cite](#how-to-cite) before using any of these scripts in published work.
+
 ---
 
 ## `syllable-nuclei-with-review.praat`
@@ -73,7 +75,7 @@ General-purpose version of the batch extraction, not tied to any particular corp
 
 ### Sources
 
-- Formant analysis settings: Hilton, C. B., Moser, C. J., et al. (2022). Acoustic regularities in infant-directed speech and song across cultures. *Science*, 378(6617). <https://doi.org/10.1126/science.abm1720>
+- Formant analysis settings: Hilton, C. B., Moser, C. J., et al. (2022). Acoustic regularities in infant-directed speech and song across cultures. *Nature Human Behaviour*, 6, 1545–1556. <https://doi.org/10.1038/s41562-022-01410-x>
 - Formant dispersion: Fitch, W. T. (1997). Vocal tract length and formant frequency dispersion correlate with body size in rhesus macaques. *The Journal of the Acoustical Society of America*, 102(2), 1213–1222. <https://doi.org/10.1121/1.421048>
 
 ---
@@ -99,7 +101,7 @@ Extracts $f_0$ (mean and SD) and formant frequencies (F1–F4) summary statistic
 
 ### Adapted from
 
-- Adapted from [`analysis/acoustics_processing/3_masterscript.praat`](https://github.com/themusiclab/infant-speech-song/blob/main/analysis/acoustics_processing/3_masterscript.praat) in  Hilton, C. B., Moser, C. J., et al. (2022). Acoustic regularities in   infant-directed speech and song across cultures. *Science*, 378(6617).   <https://doi.org/10.1126/science.abm1720>
+- Adapted from [`analysis/acoustics_processing/3_masterscript.praat`](https://github.com/themusiclab/infant-speech-song/blob/main/analysis/acoustics_processing/3_masterscript.praat) in Hilton, C. B., Moser, C. J., et al. (2022). Acoustic regularities in infant-directed speech and song across cultures. *Nature Human Behaviour*, 6, 1545–1556. <https://doi.org/10.1038/s41562-022-01410-x>
 - Original script repository: <https://github.com/themusiclab/infant-speech-song>
 
 ---
@@ -149,6 +151,29 @@ Manipulation magnitudes are set to 1 × the between-speaker SD of IDS acoustics 
 
 - Manipulation magnitudes: Hilton, C. B., et al. (2022). Acoustic regularities in infant-directed speech and song across cultures. *Nature Human Behaviour*, 6, 1545–1556. <https://doi.org/10.1038/s41562-022-01410-x>
 - Formant manipulation adapted from `changeformants.praat`, [Praat Vocal Toolkit](http://www.praatvocaltoolkit.com/)
+
+---
+
+## How to cite
+
+If you use any of these scripts, please cite this repository:
+
+> Leongómez, J. D. (2026). *praat-scripts: Praat scripts for acoustic analysis and speech manipulation* [Computer software]. GitHub. <https://github.com/JDLeongomez/praat-scripts>
+
+You can also use GitHub's **"Cite this repository"** button (generated from [`CITATION.cff`](CITATION.cff)) to get APA or BibTeX. When citing a specific script, name it in the text (e.g., "using `syllable-nuclei-with-review.praat`; Leongómez, 2026").
+
+Most scripts build on earlier work, so please also cite the corresponding sources (full references are in each script's section above):
+
+| Script | Also cite |
+| --- | --- |
+| `syllable-nuclei-with-review.praat` | De Jong & Wempe (2009) |
+| `extract_f0_formants.praat` | Hilton et al. (2022) for the analysis settings; Fitch (1997) if you report formant dispersion |
+| `extract_formants_IDS.praat` | Hilton et al. (2022) |
+| `IDS_manipulation.praat` | Hilton et al. (2022) for the manipulation magnitudes; Corretge (Praat Vocal Toolkit) for the formant-shift procedure |
+
+Example for a methods section (`syllable-nuclei-with-review.praat`):
+
+> Syllable nuclei were detected with a modified version (Leongómez, 2026) of the De Jong and Wempe (2009) Praat script, which computes intensity on a bandpass-filtered signal (100–6000 Hz), validates voiced intervals against $f_0$, and includes a manual review step for each recording.
 
 ---
 
